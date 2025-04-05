@@ -1,11 +1,15 @@
 #include <nanobind/nanobind.h>
+#include <nanobind/stl/string.h>
+#include <nanobind/stl/vector.h>
+#include "Graph.hpp"
 
-NB_MODULE(_booty_boost, m) { //make this very, very, very simple
-    m.def("add", []() { return "Hello world!"; });
+namespace nb = nanobind;
+using namespace nb::literals;
+
+NB_MODULE(_booty_boost, m) {
+    nb::class_<booty::Graph>(m, "Graph")
+        .def(nb::init<>())
+        .def("add_node", &booty::Graph::add_node)
+        .def("add_edge", &booty::Graph::add_edge)
+        .def("bfs", &booty::Graph::bfs);
 }
-
-//int add(int a, int b) { return a + b; }
-//
-//NB_MODULE(my_ext, m) {
-//    m.def("add", &add);
-//}
