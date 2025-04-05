@@ -48,6 +48,8 @@ nanobind_add_module(
 
   # Source code goes here
   src/booty_boost.cpp
+  src/Graph.hpp
+  src/Graph.cpp
 )
 
 # Install directive for scikit-build-core
