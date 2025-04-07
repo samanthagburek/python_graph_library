@@ -3,7 +3,7 @@ syntax is in NetworkX style
 
 ## Setup
 ```bash
-pip install nanobind
+pip install .
 ```
 
 boost can be found by cmakelist directly.
