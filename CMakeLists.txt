@@ -1,8 +1,11 @@
 # Set the minimum CMake version and policies for highest tested version
-cmake_minimum_required(VERSION 3.15...3.27)
+cmake_minimum_required(VERSION 3.30)
 
 # Set up the project and ensure there is a working C++ compiler
-project(python_graoh_library LANGUAGES CXX)
+project(python_graph_library LANGUAGES CXX)
+find_package(Boost REQUIRED COMPONENTS graph system filesystem)
+include_directories(${Boost_INCLUDE_DIRS})
+
 
 # Warn if the user invokes CMake directly
 if (NOT SKBUILD)
