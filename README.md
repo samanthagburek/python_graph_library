@@ -2,10 +2,13 @@
 syntax is in NetworkX style 
 
 ## Setup
-No dependency installation needed as 
+```bash
+pip install nanobind
+```
+
 boost can be found by cmakelist directly.
 (this is really nice because the lib is huge.)
-**runs out of box yay!**
+**the rest runs out of box yay!**
 
 
 ## How to use
