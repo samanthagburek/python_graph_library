@@ -18,7 +18,7 @@ Simply try any graph algorithm in the project root dir:
 (for now we only implemented dfs and bfs)
 
 ## Still not sure?
-- check [unittest.py](./unittest.py)
+- check [unittest.py](python_graph_library/unittest.py)
 - you can create a .py file in the project directory (outside /src)
   - in the .py file, have this line:
   - ```python
