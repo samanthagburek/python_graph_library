@@ -5,6 +5,7 @@
 #include <queue>
 #include <vector>
 #include <string>
+#include <tuple>
 
 namespace booty {
 
@@ -63,5 +64,30 @@ std::vector<std::string> Graph::bfs(const std::string& startLabel) {
 
     return result;
 }
+
+std::vector<std::tuple<std::string, std::string>> Graph::dfs(const std::string& startLabel) {
+    std::vector<std::tuple<std::string, std::string>> result;
+
+    if (impl->vertexMap.find(startLabel) == impl->vertexMap.end())
+        return result;
+
+    std::vector<bool> visited(boost::num_vertices(impl->graph), false);
+    Vertex start = impl->vertexMap[startLabel];
+
+    std::function<void(Vertex)> dfsVisit = [&](Vertex v) {
+        visited[v] = true;
+        for (auto edge : boost::make_iterator_range(boost::out_edges(v, impl->graph))) {
+            Vertex neighbor = boost::target(edge, impl->graph);
+            if (!visited[neighbor]) {
+                result.emplace_back(impl->labelMap[v], impl->labelMap[neighbor]);
+                dfsVisit(neighbor);
+            }
+        }
+    };
+
+    dfsVisit(start);
+    return result;
+}
+
 
 } // namespace booty
