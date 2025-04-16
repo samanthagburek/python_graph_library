@@ -27,5 +27,10 @@ Simply try any graph algorithm in the project root dir:
     Then you can create your own graph, for now we only have ``add_edge(from, to)`` method
   - and you can run dfs and bfs on the graph you just created!
 
+## Regarding homework requirements
+  - We are waiting for prof Yotov's feedback on homework2, interface.
+  - so far the closest thing we have to an interface is the [Graph.hpp file](src/Graph.hpp)
+  - Depends on what prof Yotov recommends, we might write an Abstract Base Class object in python as the interface.
+
 ## Hat-tip:
 - this project is inspired by a [tutorial on setting up cpp backend for python](https://nanobind.readthedocs.io/en/latest/packaging.html)
