@@ -38,5 +38,15 @@ class TestBFSGraph(unittest.TestCase):
         res = G.dfs("A")   # should be   [('A', 'B'), ('B', 'D'), ('A', 'C'), ('C', 'E')]
         assert isinstance(res, list)
         assert res == list(dfs_edges(G_nx,"A"))
+
+    # is_tree method depends on bfs and edge counting
+    def test_is_tree(self):
+        G = bb.Graph()
+        G.add_edge("A", "B")
+        G.add_edge("A", "C")
+        assert G.is_tree() == True
+        G.add_edge("B", "C")    #triangular cyclical assoc A-B-C
+        assert G.is_tree == False
+
 if __name__ == "__main__":
     unittest.main()
