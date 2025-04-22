@@ -13,5 +13,6 @@ NB_MODULE(_booty_boost, m) {
         .def("add_node", &booty::Graph::add_node)
         .def("add_edge", &booty::Graph::add_edge)
         .def("bfs", &booty::Graph::bfs)
-        .def("dfs", &booty::Graph::dfs);
+        .def("dfs", &booty::Graph::dfs)
+        .def("is_tree", &booty::Graph::is_tree);
 }
