@@ -2,6 +2,9 @@ class BaseGraph:
     def __init__(self) -> None:
         pass
 
+    def add_node(self, node: str):
+        pass
+
     def add_edge(self, node1: str, node2: str):
         pass
 
@@ -9,4 +12,7 @@ class BaseGraph:
         pass
 
     def dfs(self, node: str):
+        pass
+
+    def is_tree(self):
         pass

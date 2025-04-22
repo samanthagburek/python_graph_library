@@ -46,7 +46,7 @@ class TestBFSGraph(unittest.TestCase):
         G.add_edge("A", "C")
         assert G.is_tree() == True
         G.add_edge("B", "C")    #triangular cyclical assoc A-B-C
-        assert G.is_tree == False
+        assert G.is_tree() == False
 
 if __name__ == "__main__":
     unittest.main()

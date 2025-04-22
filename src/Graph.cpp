@@ -89,5 +89,14 @@ std::vector<std::tuple<std::string, std::string>> Graph::dfs(const std::string& 
     return result;
 }
 
+bool Graph::is_tree(){ //I should set this as constant method but, nay.
+    std::size_t numV = boost::num_vertices(impl->graph);
+    std::size_t numE = boost::num_edges(impl->graph);
+    if (numE != numV - 1){return false;}    //no further check needed. Capture cyclical/disconnect.
+    if (numV==1){return true;}  //a singular node considered true
+    std::string startLabel = impl->vertexMap.begin()->first;    //using any arbitrary node as starting point
+    std::vector<std::string> reachable = bfs(startLabel); //use bfs to scan
+    return reachable.size() == numV;
+}
 
 } // namespace booty
