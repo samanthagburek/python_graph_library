@@ -3,10 +3,12 @@ from .interface import BaseGraph
 
 
 class Graph(BaseGraph):
+    """
+    A wrapper around a Boost-based graph implementation providing
+    basic graph operations like BFS, DFS, and tree checking.
+    """
+
     def __init__(self) -> None:
-        """
-        Initializes a new empty graph.
-        """
         self.g = _Graph()
 
     def add_node(self, node: str) -> bool:
@@ -23,6 +25,6 @@ class Graph(BaseGraph):
 
     def is_tree(self):
         return self.g.is_tree()
-    
+
     def print_graph(self):
         return self.g.print_graph()
