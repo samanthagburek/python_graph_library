@@ -18,7 +18,7 @@ Simply try any graph algorithm in the project root dir:
 (for now we only implemented dfs and bfs)
 
 ## Still not sure?
-- check [unittest.py](./unittests.py)
+- check [test_graph.py](./test_graph.py)
 - you can create a .py file in the project directory (outside /src)
   - in the .py file, have this line:
   - ```python
@@ -26,6 +26,7 @@ Simply try any graph algorithm in the project root dir:
     ```
     Then you can create your own graph, for now we only have ``add_edge(from, to)`` method
   - and you can run dfs and bfs on the graph you just created!
+  - helps to use print_graph for debugging purposes
 
 ## Regarding homework requirements
   - We are waiting for prof Yotov's feedback on homework2, interface.

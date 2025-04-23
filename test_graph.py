@@ -7,6 +7,15 @@ from networkx.algorithms.traversal import dfs_edges
 # used to test our implememntation only
 class TestBFSGraph(unittest.TestCase):
 
+    def test_add_edge(self):
+        G = bb.Graph()
+        added = G.add_edge("A", "B")
+        assert added, "Expected edge A -> B to be newly added"
+        assert G.add_edge("A", "C")
+        assert G.add_edge("B", "D")
+        assert G.add_edge("C", "E")
+        # G.print_graph()
+
     def test_bfs(self):
         G = bb.Graph()
         G.add_edge("A", "B")
