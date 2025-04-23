@@ -1,8 +1,9 @@
 class BaseGraph:
     """
-    A wrapper around a Boost-based graph implementation providing
+    Interface definition for a simple graph library providing
     basic graph operations like BFS, DFS, and tree checking.
     """
+
     def __init__(self) -> None:
         """
         Initializes a new empty graph.
