@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <tuple>
+#include <iostream>
 
 namespace booty {
 
@@ -23,18 +24,22 @@ Graph::Graph() : impl(new GraphImpl) {}
 
 Graph::~Graph() { delete impl; }
 
-void Graph::add_node(const std::string& label) {
+bool Graph::add_node(const std::string& label) {
     if (impl->vertexMap.find(label) == impl->vertexMap.end()) {
         Vertex v = boost::add_vertex(impl->graph);
         impl->vertexMap[label] = v;
         impl->labelMap[v] = label;
+        return true;
     }
+    return false;
 }
 
-void Graph::add_edge(const std::string& from, const std::string& to) {
+bool Graph::add_edge(const std::string& from, const std::string& to) {
     add_node(from);
     add_node(to);
-    boost::add_edge(impl->vertexMap[from], impl->vertexMap[to], impl->graph);
+    // std::pair<boost::edge_descriptor, bool> is boost::add_edge return type
+    auto result = boost::add_edge(impl->vertexMap[from], impl->vertexMap[to], impl->graph);
+    return result.second; // true if the edge was added, false if it already existed
 }
 
 std::vector<std::string> Graph::bfs(const std::string& startLabel) {
@@ -98,5 +103,21 @@ bool Graph::is_tree(){ //I should set this as constant method but, nay.
     std::vector<std::string> reachable = bfs(startLabel); //use bfs to scan
     return reachable.size() == numV;
 }
+
+// Iterates over out-edges to simulate adjacency list
+//will need to be changed if use directed graphs too 
+void Graph::print_graph() const {
+    for (const auto& pair : impl->vertexMap) {
+        const std::string& label = pair.first;
+        Vertex v = pair.second;
+        std::cout << label << " -> ";
+        for (auto edge : boost::make_iterator_range(boost::out_edges(v, impl->graph))) {
+            Vertex neighbor = boost::target(edge, impl->graph);
+            std::cout << impl->labelMap[neighbor] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
 
 } // namespace booty

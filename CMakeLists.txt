@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.30)
 # Set up the project and ensure there is a working C++ compiler
 project(python_graph_library LANGUAGES CXX)
 find_package(Boost REQUIRED COMPONENTS graph system filesystem)
-include_directories(${Boost_INCLUDE_DIRS})  #added by sam
+include_directories(${Boost_INCLUDE_DIRS})  
 
 
 # Warn if the user invokes CMake directly
