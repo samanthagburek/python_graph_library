@@ -1,25 +1,15 @@
-[build-system]
-requires = ["scikit-build-core >=0.4.3", "nanobind >=1.3.2"]
-build-backend = "scikit_build_core.build"
-#above is hard requirment of nanobind
 
 [project]
 name = "booty_boost"
 version = "0.0.1"
-description = "A brief description of what this project does, Whuteva"
+description = "A networkx style graph library that uses boost on the backend."
 readme = "README.md"
 requires-python = ">=3.8"
 
-dependencies = [
-    "nanobind==2.6.1",
-]
+dependencies = ["nanobind==2.6.1"]
 
-authors = [
-    { name = "Your Name", email = "your.email@address.com" },
-]
-classifiers = [
-    "License :: BSD",
-]
+authors = [{ name = "Your Name", email = "your.email@address.com" }]
+classifiers = ["License :: BSD"]
 # Optional: runtime dependency specification
 # dependencies = [ "cryptography >=41.0" ]
 
@@ -36,3 +26,4 @@ build-dir = "build/{wheel_tag}"
 
 # Build stable ABI wheels for CPython 3.12+
 wheel.py-api = "cp312"
+

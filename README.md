@@ -4,34 +4,30 @@ syntax is in NetworkX style
 ## Setup
 ```bash
 pip install .
+
+This will build the booty_boost library, which can then be imported.
+
 ```
+## Interface
 
-boost can be found by cmakelist directly.
-(this is really nice because the lib is huge.)
-**the rest runs out of box yay!**
+Currently the library consists only of an interface definition and mocked tests 
+for it. In the future, an implementation using the CPP boost library will be added.
+
+### methods
+This interface currently supports a few methods:
+- add_node
+- add_edge
+- bfs
+- dfs
+- is_tree
+- print_graph
+
+More information on them can be seen in the docstrings.
 
 
-## How to use
-Simply try any graph algorithm in the project root dir:
-- add header ```import booty_boost``` 
-- use NetworkX API
-(for now we only implemented dfs and bfs)
+## Tests
+There are currently 2 test files in the `tests/` directory:
+- a sanity check that just probes the class for its methods
+- a unittest class that tests most of the methods in the class
 
-## Still not sure?
-- check [test_graph.py](./test_graph.py)
-- you can create a .py file in the project directory (outside /src)
-  - in the .py file, have this line:
-  - ```python
-    import booty_boost
-    ```
-    Then you can create your own graph, for now we only have ``add_edge(from, to)`` method
-  - and you can run dfs and bfs on the graph you just created!
-  - helps to use print_graph for debugging purposes
-
-## Regarding homework requirements
-  - We are waiting for prof Yotov's feedback on homework2, interface.
-  - so far the closest thing we have to an interface is the [Graph.hpp file](src/Graph.hpp)
-  - Depends on what prof Yotov recommends, we might write an Abstract Base Class object in python as the interface.
-
-## Hat-tip:
-- this project is inspired by a [tutorial on setting up cpp backend for python](https://nanobind.readthedocs.io/en/latest/packaging.html)
+Currently, they are both supported by a `MagicMock` implementation.
