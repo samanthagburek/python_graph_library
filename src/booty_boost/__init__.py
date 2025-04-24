@@ -1,2 +1,4 @@
-from .interface import BaseGraph
+from .graph import Graph
 
+
+__all__ = ["Graph"]
