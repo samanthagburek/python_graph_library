@@ -40,3 +40,12 @@ Simply try any graph algorithm in the project root dir:
 There are currently 2 test files in the `tests/` directory:
 - a sanity check that just probes the class for its methods
 - a unittest class that tests most of the methods in the class
+
+## Update on Integration
+This repo has added a submodule from a [c++ Ninja graph library](https://github.com/seongjaeny/opensource_cpp_base/tree/integration) from their "integration" branch.
+We are not sure what to do with it yet, but note that now if you want to clone from our [integration branch](https://github.com/samanthagburek/python_graph_library/tree/integration),
+you would then further need to:
+```bash
+git submodule init
+git submodule update
+```
