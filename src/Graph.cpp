@@ -10,7 +10,7 @@
 
 namespace booty {
 
-using BoostGraph = boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS>;
+using BoostGraph = boost::adjacency_list<boost::vecS, boost::vecS, boost::bidirectionalS>;
 using Vertex = boost::graph_traits<BoostGraph>::vertex_descriptor;
 
 class Graph::GraphImpl {
@@ -37,7 +37,7 @@ bool Graph::add_node(const std::string& label) {
 bool Graph::add_edge(const std::string& from, const std::string& to) {
     add_node(from);
     add_node(to);
-    // std::pair<boost::edge_descriptor, bool> is boost::add_edge return type
+    // std::pair<boost::edge_descriptor, bool> is boost::add_edge return type, no repeated add issue.
     auto result = boost::add_edge(impl->vertexMap[from], impl->vertexMap[to], impl->graph);
     return result.second; // true if the edge was added, false if it already existed
 }
@@ -99,8 +99,17 @@ bool Graph::is_tree(){ //I should set this as constant method but, nay.
     std::size_t numE = boost::num_edges(impl->graph);
     if (numE != numV - 1){return false;}    //no further check needed. Capture cyclical/disconnect.
     if (numV==1){return true;}  //a singular node considered true
-    std::string startLabel = impl->vertexMap.begin()->first;    //using any arbitrary node as starting point
-    std::vector<std::string> reachable = bfs(startLabel); //use bfs to scan
+//    std::string startLabel = impl->vertexMap.begin()->first;    //for undirected, using any arbitrary node as starting point
+       std::vector<std::string> roots;
+    for (const auto& pair : impl->vertexMap) {
+        auto v = pair.second;
+        if (boost::in_degree(v, impl->graph) == 0) {
+            roots.push_back(pair.first);
+        }
+    }
+    if (roots.size()!=1)return false;   //strictly one root
+
+    std::vector<std::string> reachable = bfs(roots[0]); //use bfs to scan
     return reachable.size() == numV;
 }
 
