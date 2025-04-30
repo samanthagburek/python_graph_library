@@ -49,3 +49,4 @@ you would then further need to:
 git submodule init
 git submodule update
 ```
+Note: for use with Ninja graph, ``Integration`` branch implements bi-directional graph (other branches are undirected) which might lead to broken bfs/dfs/graph iteration.
