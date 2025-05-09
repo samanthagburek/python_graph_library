@@ -3,7 +3,8 @@ syntax is in NetworkX style
 
 ## Setup
 ```bash
-pip install .
+uv pip install .
+
 
 boost can be found by cmakelist directly.
 (this is really nice because the lib is huge.)
