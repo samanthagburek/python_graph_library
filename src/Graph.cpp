@@ -1,5 +1,7 @@
 #include "Graph.hpp"
 
+#include <boost/graph/breadth_first_search.hpp>
+#include <boost/graph/depth_first_search.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <unordered_map>
 #include <queue>
@@ -24,6 +26,33 @@ Graph::Graph() : impl(new GraphImpl) {}
 
 Graph::~Graph() { delete impl; }
 
+//customized struct inherits from default. Customized event handle. Used only once
+struct BfsVisitor : public boost::default_bfs_visitor {
+    std::vector<std::string>& result;
+    std::unordered_map<Vertex, std::string>& labelMap;
+
+    BfsVisitor(std::vector<std::string>& r, std::unordered_map<Vertex, std::string>& l)
+        : result(r), labelMap(l) {}
+
+    void discover_vertex(Vertex v, const BoostGraph&) {
+        result.push_back(labelMap[v]);
+    }
+};
+
+struct DfsVisitor : public boost::default_dfs_visitor {
+    std::vector<std::tuple<std::string, std::string>>& result;
+    std::unordered_map<Vertex, std::string>& labelMap;
+
+    DfsVisitor(std::vector<std::tuple<std::string, std::string>>& r, std::unordered_map<Vertex, std::string>& l)
+        : result(r), labelMap(l) {}
+
+    void tree_edge(boost::graph_traits<BoostGraph>::edge_descriptor e, const BoostGraph& g) {
+        Vertex u = boost::source(e, g);
+        Vertex v = boost::target(e, g);
+        result.emplace_back(labelMap[u], labelMap[v]);
+    }
+};
+
 bool Graph::add_node(const std::string& label) {
     if (impl->vertexMap.find(label) == impl->vertexMap.end()) {
         Vertex v = boost::add_vertex(impl->graph);
@@ -42,30 +71,26 @@ bool Graph::add_edge(const std::string& from, const std::string& to) {
     return result.second; // true if the edge was added, false if it already existed
 }
 
+
 std::vector<std::string> Graph::bfs(const std::string& startLabel) {
     std::vector<std::string> result;
 
     if (impl->vertexMap.find(startLabel) == impl->vertexMap.end())
-        return result;
+        return result;  //empty
 
-    std::vector<bool> visited(boost::num_vertices(impl->graph), false);
-    std::queue<Vertex> q;
+    std::vector<boost::default_color_type> color(boost::num_vertices(impl->graph));
     Vertex start = impl->vertexMap[startLabel];
-    q.push(start);
-    visited[start] = true;
 
-    while (!q.empty()) {
-        Vertex v = q.front(); q.pop();
-        result.push_back(impl->labelMap[v]);
-
-        for (auto edge : boost::make_iterator_range(boost::out_edges(v, impl->graph))) {
-            Vertex neighbor = boost::target(edge, impl->graph);
-            if (!visited[neighbor]) {
-                visited[neighbor] = true;
-                q.push(neighbor);
-            }
-        }
-    }
+    BfsVisitor vis(result, impl->labelMap);
+    /**ok this is kinda ugly
+        must have a specified color map (state indication)
+        each vertex is mapped to an ind pos in the color map (call getter) for iterator
+    **/
+    boost::breadth_first_search
+    (
+        impl->graph, start,
+        boost::visitor(vis).color_map(boost::make_iterator_property_map(color.begin(), boost::get(boost::vertex_index, impl->graph)))
+    );
 
     return result;
 }
@@ -74,23 +99,14 @@ std::vector<std::tuple<std::string, std::string>> Graph::dfs(const std::string& 
     std::vector<std::tuple<std::string, std::string>> result;
 
     if (impl->vertexMap.find(startLabel) == impl->vertexMap.end())
-        return result;
+        return result;  //empty!
 
-    std::vector<bool> visited(boost::num_vertices(impl->graph), false);
+    std::vector<boost::default_color_type> color(boost::num_vertices(impl->graph));
     Vertex start = impl->vertexMap[startLabel];
 
-    std::function<void(Vertex)> dfsVisit = [&](Vertex v) {
-        visited[v] = true;
-        for (auto edge : boost::make_iterator_range(boost::out_edges(v, impl->graph))) {
-            Vertex neighbor = boost::target(edge, impl->graph);
-            if (!visited[neighbor]) {
-                result.emplace_back(impl->labelMap[v], impl->labelMap[neighbor]);
-                dfsVisit(neighbor);
-            }
-        }
-    };
+    DfsVisitor vis(result, impl->labelMap);
+    boost::depth_first_visit(impl->graph, start, vis, boost::make_iterator_property_map(color.begin(), boost::get(boost::vertex_index, impl->graph)));
 
-    dfsVisit(start);
     return result;
 }
 
