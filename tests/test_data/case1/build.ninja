@@ -1,0 +1,5 @@
+rule CXX
+  command = g++ -c $in -o $out
+
+build hello.o: CXX hello.cc
+build hello: CXX hello.o

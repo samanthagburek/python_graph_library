@@ -12,7 +12,7 @@ requires-python = ">=3.8"
 
 dependencies = ["nanobind==2.6.1"]
 
-authors = [{ name = "Your Name", email = "your.email@address.com" }]
+authors = [{ name = "Team 7", email = "your.email@address.com" }]
 classifiers = ["License :: BSD"]
 # Optional: runtime dependency specification
 # dependencies = [ "cryptography >=41.0" ]
