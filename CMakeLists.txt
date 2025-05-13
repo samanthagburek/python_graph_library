@@ -1,5 +1,7 @@
 # Set the minimum CMake version and policies for highest tested version
 cmake_minimum_required(VERSION 3.30)
+# Force fPIC for all targets (actually only necessary for submodule integration)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # Set up the project and ensure there is a working C++ compiler
 project(python_graph_library LANGUAGES CXX)
